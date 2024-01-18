@@ -1,6 +1,6 @@
 import ply.lex as lex
 
-class MyLexer(object):
+class MyLexer:
     tokens = (
         'NUMBER',
         'PLUS',
@@ -20,7 +20,7 @@ class MyLexer(object):
         'KEYWORD_ARGUMENT',
         'KEYWORD_SELECTOR',
         'EQUALS',
-		'NOT_EQUAL',
+        'NOT_EQUAL',
         'GREATER',
         'LESS',
         'GREATER_EQUAL',
@@ -97,7 +97,27 @@ class MyLexer(object):
                 break
             print(tok)
 
-# Build the lexer and try it out
-smash_lex = MyLexer()
-smash_lex.build()
-smash_lex.test('a := #(1 2 3)')
+    def generate(self,data):
+        self.lexer.input(data)
+        while True:
+            tok = self.lexer.token()
+            if not tok:
+                break
+            yield tok
+
+if __name__ == "__main__":
+    test_string = '''
+    a := #(1 2 3)
+    b := 5
+    c := 10
+    d := a == b
+    e := a != c
+    f := b > c
+    g := b < c
+    h := b >= c
+    i := b <= c
+    '''
+
+    smash_lex = MyLexer()
+    smash_lex.build()
+    smash_lex.test(test_string)
