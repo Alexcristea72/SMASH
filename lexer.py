@@ -47,7 +47,7 @@ class MyLexer:
     t_ASSIGNMENT = r':='
 
     def t_UNARY_MESSAGE(self, t):
-        r'\b\w+\b(?:\s*:\s*\$?\w+\$?(?:\s*:\s*\w+\$?)*)?'
+        r'\b(?:history|\w+)\b(?:\s*:\s*\$?\w+\$?(?:\s*:\s*\w+\$?)*)?'
         if t.value.isalpha():
             t.type = 'VARIABLE'
         else:
